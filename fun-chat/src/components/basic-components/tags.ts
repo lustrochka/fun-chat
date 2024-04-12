@@ -31,3 +31,10 @@ export const img = (className: string, src: string) => {
   element.addAttributes({ src });
   return element;
 };
+
+export const a = (className: string, text: string, href: string) => {
+  const element = new Component('a', className);
+  element.changeText(text);
+  element.addAttributes({ href });
+  return element;
+};

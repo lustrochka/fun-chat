@@ -42,9 +42,20 @@ body {
   height: 100vh;
 }
 
-.header {
+.header,
+.footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+}
+
+.footer__school,
+.footer__author {
+  display: flex;
+  gap: 10px;
+}
+
+.footer__logo {
+  background-image: url(./assets/rs-logo-NlzdOV4A.webp);
 }
