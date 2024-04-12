@@ -12,10 +12,17 @@ class Controller {
     console.log(data);
     const parsedData = JSON.parse(data);
     if (parsedData.type === 'ERROR') this.manageLogin(parsedData);
-    if (parsedData.type === 'USER_LOGIN') new Router().changeUrl('/main');
+    if (parsedData.type === 'USER_LOGIN') {
+      new Router().changeUrl('/main');
+    }
+    if (parsedData.type === 'USER_LOGOUT') {
+      sessionStorage.clear();
+      new Router().changeUrl('/login');
+    }
   }
 
   manageLogin(data: ResponseType) {
+    sessionStorage.clear();
     getDomElement('.modal').hidden = false;
     getDomElement('.error-message__text').textContent = `${ERRORS[data.payload.error]}`;
   }

@@ -29,6 +29,23 @@ class API {
     };
     socket.send(JSON.stringify(data));
   }
+
+  logOut() {
+    id++;
+    const login = sessionStorage.getItem('login');
+    const pass = sessionStorage.getItem('pass');
+    const data = {
+      id: `${id}`,
+      type: 'USER_LOGOUT',
+      payload: {
+        user: {
+          login,
+          password: pass,
+        },
+      },
+    };
+    socket.send(JSON.stringify(data));
+  }
 }
 
 export default API;

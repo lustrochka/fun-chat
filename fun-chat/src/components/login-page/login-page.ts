@@ -72,9 +72,7 @@ class LoginPage extends Component<HTMLFormElement> {
   }
 
   render() {
-    this.#submitButton.setListener('click', () =>
-      new API().sendLogin(this.#nameInput.getValue(), this.#passInput.getValue())
-    );
+    this.#submitButton.setListener('click', () => this.sendLogin());
     this.appendChildren(
       new Label('login-form__label', 'Name', { for: 'name' }),
       this.#nameInput,
@@ -86,9 +84,15 @@ class LoginPage extends Component<HTMLFormElement> {
       new Modal()
     );
     this.setListener('submit', (e: Event) => {
-      if (this.checkFormValidity()) new API().sendLogin(this.#nameInput.getValue(), this.#passInput.getValue());
+      if (this.checkFormValidity()) this.sendLogin();
       e.preventDefault();
     });
+  }
+
+  sendLogin() {
+    sessionStorage.setItem('login', this.#nameInput.getValue());
+    sessionStorage.setItem('pass', this.#passInput.getValue());
+    new API().sendLogin(this.#nameInput.getValue(), this.#passInput.getValue());
   }
 
   checkValidity(value: string, type: string) {
