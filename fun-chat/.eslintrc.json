@@ -10,14 +10,14 @@
   ],
   "parserOptions": {
     "ecmaVersion": 2020,
-    "sourceType": "module",
-    "project": "./tsconfig.json"
+    "sourceType": "module"
   },
   "env": {
     "es6": true,
     "browser": true,
     "node": true
   },
+  "noInlineConfig": true,
   "rules": {
     "@typescript-eslint/no-explicit-any": "error",
     "no-debugger": "off",
@@ -28,7 +28,6 @@
     "no-restricted-syntax": 0,
     "no-plusplus": 0,
     "@typescript-eslint/no-unused-expressions": 0,
-    "func-names": 0,
-    "noInlineConfig": true
+    "func-names": 0
   }
 }

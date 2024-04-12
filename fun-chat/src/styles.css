@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.login-form {
+  width: 350px;
+}
+
+.login-form__label,
+.login-form__input,
+.login-form__message {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.login-form__message {
+  font-size: 14px;
+}
+
+.modal {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.error-message {
+  width: 200px;
+  height: 100px;
+  background-color: rgb(162, 162, 162);
+  margin: 100px auto;
+}
