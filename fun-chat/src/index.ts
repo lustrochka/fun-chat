@@ -4,7 +4,7 @@ import './styles.css';
 const app = new LoginPage();
 document.querySelector('body')?.appendChild(app.getNode());
 
-/*let socket = new WebSocket('ws://localhost:4000');
+/* let socket = new WebSocket('ws://localhost:4000');
 
 let d1 = {
   id: '1',
@@ -78,4 +78,4 @@ socket.onclose = function (event) {
 
 socket.onerror = function (error) {
   alert(`[error]`);
-};*/
+}; */

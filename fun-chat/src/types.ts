@@ -5,3 +5,11 @@ export type Items = {
 export type PatternsType = {
   [key: string]: string[];
 };
+
+export type ResponseType = {
+  id: string;
+  type: string;
+  payload: {
+    error: string;
+  };
+};

@@ -81,7 +81,10 @@ class LoginPage extends Component<HTMLFormElement> {
       this.#submitButton,
       new Modal()
     );
-    this.setListener('submit', (e: Event) => e.preventDefault());
+    this.setListener('submit', (e: Event) => {
+      if (this.checkFormValidity()) new API().sendLogin(this.#nameInput.getValue(), this.#passInput.getValue());
+      e.preventDefault();
+    });
   }
 
   checkValidity(value: string, type: string) {
