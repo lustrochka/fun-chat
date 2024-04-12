@@ -68,6 +68,10 @@ class LoginPage extends Component<HTMLFormElement> {
         } else this.#submitButton.addAttributes({ disabled: 'true' });
       }
     );
+    this.render();
+  }
+
+  render() {
     this.#submitButton.setListener('click', () =>
       new API().sendLogin(this.#nameInput.getValue(), this.#passInput.getValue())
     );

@@ -1,4 +1,5 @@
 import { getDomElement } from '../utils/getDomElement';
+import Router from '../router/router';
 import { Items, ResponseType } from '../types';
 
 const ERRORS: Items = {
@@ -10,8 +11,8 @@ class Controller {
   checkData(data: string) {
     console.log(data);
     const parsedData = JSON.parse(data);
-    console.log(parsedData);
     if (parsedData.type === 'ERROR') this.manageLogin(parsedData);
+    if (parsedData.type === 'USER_LOGIN') new Router().changeUrl('/main');
   }
 
   manageLogin(data: ResponseType) {
