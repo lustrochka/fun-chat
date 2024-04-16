@@ -1,11 +1,13 @@
 import Component from '../basic-components/component';
 import Header from './header';
 import Footer from './footer';
-import { p } from '../basic-components/tags';
+import API from '../../api/api';
 
 class Main extends Component {
   constructor() {
-    super('div', 'main', new Header(), p('', 'main'), new Footer());
+    super('div', 'main', new Header(), new Footer());
+    new API().getOnlineUsers();
+    new API().getOfflineUsers();
   }
 }
 

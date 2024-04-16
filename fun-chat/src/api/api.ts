@@ -1,20 +1,8 @@
-import Controller from '../controller/controller';
+import socket from './socket';
 
-const socket = new WebSocket('ws://localhost:4000');
 let id = 1;
 
-socket.onopen = function () {
-  console.log('opened');
-};
-
 class API {
-  constructor() {
-    socket.onmessage = function (event) {
-      const controller = new Controller();
-      controller.checkData(event.data);
-    };
-  }
-
   sendLogin(login: string, pass: string) {
     id++;
     const data = {
@@ -45,6 +33,43 @@ class API {
       },
     };
     socket.send(JSON.stringify(data));
+  }
+
+  getOnlineUsers() {
+    id++;
+    const isOpened = JSON.parse(sessionStorage.getItem('isOpened') || 'false');
+    const login = sessionStorage.getItem('login') || '';
+    const pass = sessionStorage.getItem('pass') || '';
+    const data = {
+      id: `${id}`,
+      type: 'USER_ACTIVE',
+      payload: null,
+    };
+    if (isOpened) socket.send(JSON.stringify(data));
+    else {
+      socket.addEventListener(
+        'open',
+        () => {
+          this.sendLogin(login, pass);
+          socket.send(JSON.stringify(data));
+        },
+        { once: true }
+      );
+    }
+  }
+
+  getOfflineUsers() {
+    id++;
+    const isOpened = JSON.parse(sessionStorage.getItem('isOpened') || 'false');
+    const data = {
+      id: `${id}`,
+      type: 'USER_INACTIVE',
+      payload: null,
+    };
+    if (isOpened) socket.send(JSON.stringify(data));
+    else {
+      socket.addEventListener('open', () => socket.send(JSON.stringify(data)), { once: true });
+    }
   }
 }
 

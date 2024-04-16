@@ -38,3 +38,10 @@ export const a = (className: string, text: string, href: string) => {
   element.addAttributes({ href });
   return element;
 };
+
+export const ul = (className: string, ...children: Component[]) => new Component('ul', className, ...children);
+export const li = (className: string, text: string, ...children: Component[]) => {
+  const element = new Component('li', className, ...children);
+  element.changeText(text);
+  return element;
+};

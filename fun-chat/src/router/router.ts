@@ -1,6 +1,8 @@
 import LoginPage from '../components/login-page/login-page';
 import Main from '../components/main/main';
 
+const MIN_STORAGE_LEN = 1;
+
 class Router {
   changeUrl(url: string) {
     window.history.pushState({}, '', url);
@@ -8,13 +10,24 @@ class Router {
   }
 
   changePage() {
-    const ROUTES: { [key: string]: Node } = {
-      '/login': new LoginPage().getNode(),
-      '/main': new Main().getNode(),
-    };
     const path = window.location.pathname;
     document.body.innerHTML = '';
-    document.body.appendChild(ROUTES[path]);
+    switch (path) {
+      case '/login':
+        if (sessionStorage.length === MIN_STORAGE_LEN) document.body.appendChild(new LoginPage().getNode());
+        else {
+          this.changeUrl('/main');
+        }
+        break;
+      case '/main':
+        if (sessionStorage.length > MIN_STORAGE_LEN) document.body.appendChild(new Main().getNode());
+        else {
+          this.changeUrl('/login');
+        }
+        break;
+      default:
+        console.log('404');
+    }
   }
 }
 

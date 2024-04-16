@@ -74,5 +74,9 @@ class Component<T extends HTMLElement = HTMLElement> {
   show() {
     this.#node.hidden = false;
   }
+
+  insert(position: InsertPosition, element: Component) {
+    this.#node.insertAdjacentElement(position, element.getNode());
+  }
 }
 export default Component;

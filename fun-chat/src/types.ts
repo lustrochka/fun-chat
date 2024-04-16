@@ -13,3 +13,13 @@ export type ResponseType = {
     error: string;
   };
 };
+
+export type UsersData = {
+  login: string;
+  isLogined: boolean;
+};
+
+export type UsersList = {
+  active: UsersData[];
+  inactive: UsersData[];
+};

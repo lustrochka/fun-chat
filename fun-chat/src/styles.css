@@ -59,3 +59,22 @@ body {
 .footer__logo {
   background-image: url(./assets/rs-logo-NlzdOV4A.webp);
 }
+
+.active-users,
+.inactive-users {
+  list-style-type: none;
+}
+
+.active-users li::before,
+.inactive-users li::before {
+  content: '●';
+  padding-right: 10px;
+}
+
+.active-users li::before {
+  color: green;
+}
+
+.inactive-users li::before {
+  color: red;
+}

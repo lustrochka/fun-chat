@@ -7,6 +7,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const baseConfig = {
   entry: path.resolve(__dirname, './src/index'),
   mode: 'development',
+  devServer: {
+    historyApiFallback: true,
+  },
   module: {
     rules: [
       {
