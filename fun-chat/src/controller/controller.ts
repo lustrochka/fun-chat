@@ -1,7 +1,7 @@
 import { getDomElement } from '../utils/getDomElement';
 import Router from '../router/router';
 import UserList from '../components/main/user-list';
-import { Items, ResponseType, UsersList } from '../types';
+import { Items, ResponseType, UsersList, UsersData } from '../types';
 
 const LOGIN_ERRORS: Items = {
   'incorrect password': 'Incorrect password',
@@ -14,6 +14,7 @@ class Controller {
   checkData(data: string) {
     console.log(data);
     const parsedData = JSON.parse(data);
+    const currentLogin = sessionStorage.getItem('login') || '';
 
     switch (parsedData.type) {
       case 'ERROR':
@@ -27,7 +28,7 @@ class Controller {
         new Router().changeUrl('/login');
         break;
       case 'USER_ACTIVE':
-        users.active = parsedData.payload.users;
+        users.active = parsedData.payload.users.filter((el: UsersData) => el.login !== currentLogin);
         break;
       case 'USER_INACTIVE':
         users.inactive = parsedData.payload.users;
