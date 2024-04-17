@@ -50,8 +50,7 @@ class Controller {
   }
 
   manageUsersList(data: UsersList) {
-    const header = getDomElement('.header');
-    header.insertAdjacentElement('afterend', new UserList(data).getNode());
+    getDomElement('.filter').insertAdjacentElement('afterend', new UserList(data).getNode());
   }
 
   changeUsersList({ login, isLogined }: UsersData) {
