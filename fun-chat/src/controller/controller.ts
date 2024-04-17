@@ -24,7 +24,8 @@ class Controller {
         if (window.location.pathname === '/login') new Router().changeUrl('/main');
         break;
       case 'USER_LOGOUT':
-        sessionStorage.clear();
+        sessionStorage.removeItem('login');
+        sessionStorage.removeItem('pass');
         new Router().changeUrl('/login');
         break;
       case 'USER_ACTIVE':
