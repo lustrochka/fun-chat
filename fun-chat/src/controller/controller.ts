@@ -1,4 +1,4 @@
-import { getDomElement } from '../utils/getDomElement';
+import { getDomElement, getDomElements } from '../utils/getDomElement';
 import Router from '../router/router';
 import UserList from '../components/main/user-list';
 import { Items, ResponseType, UsersList, UsersData } from '../types';
@@ -35,6 +35,10 @@ class Controller {
         users.inactive = parsedData.payload.users;
         this.manageUsersList(users);
         break;
+      case 'USER_EXTERNAL_LOGIN':
+      case 'USER_EXTERNAL_LOGOUT':
+        this.changeUsersList(parsedData.payload.user);
+        break;
       default:
     }
   }
@@ -48,6 +52,13 @@ class Controller {
   manageUsersList(data: UsersList) {
     const header = getDomElement('.header');
     header.insertAdjacentElement('afterend', new UserList(data).getNode());
+  }
+
+  changeUsersList({ login, isLogined }: UsersData) {
+    const active = getDomElement('.active-users');
+    const inactive = getDomElement('.inactive-users');
+    const targetUser = Array.from(getDomElements('.users-item')).filter((el) => el.textContent === login)[0];
+    isLogined ? active.appendChild(targetUser) : inactive.appendChild(targetUser);
   }
 }
 
