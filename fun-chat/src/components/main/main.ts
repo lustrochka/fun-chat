@@ -20,12 +20,12 @@ class Main extends Component {
 
   changeMsgWindow(e: Event) {
     const element = e.target;
-    console.log(element);
     if (element instanceof HTMLElement && element.classList.contains('users-item')) {
       const login = element.textContent || '';
       const isOnline = element.parentElement?.className === 'active-users';
-      console.log(element);
-      this.#msgWindow.changeTitle(login, isOnline);
+      const newWindow = new MessageWindow(login, isOnline);
+      this.#msgWindow.getNode().replaceWith(newWindow.getNode());
+      this.#msgWindow = newWindow;
     }
   }
 }

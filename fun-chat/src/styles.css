@@ -81,4 +81,10 @@ body {
 
 .main__middle {
   display: flex;
+  height: 80%;
+}
+
+.msg-window {
+  width: 80%;
+  text-align: center;
 }

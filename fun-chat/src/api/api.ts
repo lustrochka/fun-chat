@@ -71,6 +71,21 @@ class API {
       socket.addEventListener('open', () => socket.send(JSON.stringify(data)), { once: true });
     }
   }
+
+  sendMessage(text: string, user: string) {
+    id++;
+    const data = {
+      id: `${id}`,
+      type: 'MSG_SEND',
+      payload: {
+        message: {
+          to: user,
+          text,
+        },
+      },
+    };
+    socket.send(JSON.stringify(data));
+  }
 }
 
 export default API;
