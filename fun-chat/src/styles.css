@@ -78,3 +78,7 @@ body {
 .inactive-users li::before {
   color: red;
 }
+
+.main__middle {
+  display: flex;
+}

@@ -37,7 +37,7 @@ class Controller {
         break;
       case 'USER_EXTERNAL_LOGIN':
       case 'USER_EXTERNAL_LOGOUT':
-        this.changeUsersList(parsedData.payload.user);
+        this.changeUsersStatus(parsedData.payload.user);
         break;
       default:
     }
@@ -53,11 +53,16 @@ class Controller {
     getDomElement('.filter').insertAdjacentElement('afterend', new UserList(data).getNode());
   }
 
-  changeUsersList({ login, isLogined }: UsersData) {
+  changeUsersStatus({ login, isLogined }: UsersData) {
     const active = getDomElement('.active-users');
     const inactive = getDomElement('.inactive-users');
     const targetUser = Array.from(getDomElements('.users-item')).filter((el) => el.textContent === login)[0];
     isLogined ? active.appendChild(targetUser) : inactive.appendChild(targetUser);
+
+    const msgTitle = getDomElement('.msg-window__title');
+    if (msgTitle.textContent && msgTitle.textContent.length > 0) {
+      msgTitle.textContent = `${msgTitle.textContent?.split(' ')[0]} ${isLogined ? 'Online' : 'Offline'}`;
+    }
   }
 }
 
