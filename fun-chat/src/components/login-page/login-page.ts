@@ -84,6 +84,7 @@ class LoginPage extends Component<HTMLFormElement> {
       new Modal()
     );
     this.setListener('submit', (e: Event) => {
+      console.log('s');
       if (this.checkFormValidity()) this.sendLogin();
       e.preventDefault();
     });

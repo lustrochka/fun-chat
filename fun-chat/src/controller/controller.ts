@@ -2,6 +2,7 @@ import { getDomElement, getDomElements } from '../utils/getDomElement';
 import Router from '../router/router';
 import UserList from '../components/main/user-list';
 import { Items, ResponseType, UsersList, UsersData } from '../types';
+import { li } from '../components/basic-components/tags';
 
 const LOGIN_ERRORS: Items = {
   'incorrect password': 'Incorrect password',
@@ -39,6 +40,9 @@ class Controller {
       case 'USER_EXTERNAL_LOGOUT':
         this.changeUsersStatus(parsedData.payload.user);
         break;
+      case 'MSG_SEND':
+        if (currentLogin === parsedData.payload.message.to) console.log('hhh');
+        break;
       default:
     }
   }
@@ -56,7 +60,8 @@ class Controller {
   changeUsersStatus({ login, isLogined }: UsersData) {
     const active = getDomElement('.active-users');
     const inactive = getDomElement('.inactive-users');
-    const targetUser = Array.from(getDomElements('.users-item')).filter((el) => el.textContent === login)[0];
+    let targetUser = Array.from(getDomElements('.users-item')).filter((el) => el.textContent === login)[0];
+    if (!targetUser) targetUser = li('users-item', login).getNode();
     isLogined ? active.appendChild(targetUser) : inactive.appendChild(targetUser);
 
     const msgTitle = getDomElement('.msg-window__title');

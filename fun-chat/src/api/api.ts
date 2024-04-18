@@ -86,6 +86,20 @@ class API {
     };
     socket.send(JSON.stringify(data));
   }
+
+  getMessages(login: string) {
+    id++;
+    const data = {
+      id: `${id}`,
+      type: 'MSG_FROM_USER',
+      payload: {
+        user: {
+          login,
+        },
+      },
+    };
+    socket.send(JSON.stringify(data));
+  }
 }
 
 export default API;

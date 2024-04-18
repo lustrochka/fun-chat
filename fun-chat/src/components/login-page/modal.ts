@@ -6,7 +6,11 @@ class Modal extends Component {
   constructor() {
     super('div', 'modal');
     this.appendChildren(
-      div('error-message', div('error-message__text'), new Button('.button', 'OK', {}, () => this.hide()))
+      div(
+        'error-message',
+        div('error-message__text'),
+        new Button('button', 'OK', { type: 'button' }, () => this.hide())
+      )
     );
     this.hide();
   }
