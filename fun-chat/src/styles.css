@@ -85,6 +85,39 @@ body {
 }
 
 .msg-window {
+  display: grid;
+  grid-template-rows: 30px 1fr 30px;
   width: 80%;
   text-align: center;
+}
+
+.msg-history {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.msg-item {
+  width: 50%;
+  background-color: #c2bdbd;
+  padding: 10px;
+}
+
+.msg-title {
+  display: flex;
+  justify-content: space-between;
+  background-color: grey;
+}
+
+.msg-text {
+  word-break: break-all;
+}
+
+.left {
+  align-self: start;
+}
+
+.right {
+  align-self: end;
 }

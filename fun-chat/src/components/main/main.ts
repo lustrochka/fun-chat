@@ -26,6 +26,7 @@ class Main extends Component {
       const newWindow = new MessageWindow(login, isOnline);
       this.#msgWindow.getNode().replaceWith(newWindow.getNode());
       this.#msgWindow = newWindow;
+      new API().getMessages(login);
     }
   }
 }

@@ -19,7 +19,6 @@ class MessageInput extends Component {
     this.setListener('submit', (e) => {
       e.preventDefault();
       if (text.getValue().length > 0) new API().sendMessage(text.getValue(), login);
-      new API().getMessages(login);
     });
   }
 }

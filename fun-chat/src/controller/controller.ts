@@ -1,7 +1,9 @@
 import { getDomElement, getDomElements } from '../utils/getDomElement';
 import Router from '../router/router';
 import UserList from '../components/main/user-list';
-import { Items, ResponseType, UsersList, UsersData } from '../types';
+import MessageHistory from '../components/main/messageHistory';
+import MessageItem from '../components/main/MessageItem';
+import { Items, ResponseType, UsersList, UsersData, MessageType } from '../types';
 import { li } from '../components/basic-components/tags';
 
 const LOGIN_ERRORS: Items = {
@@ -41,7 +43,10 @@ class Controller {
         this.changeUsersStatus(parsedData.payload.user);
         break;
       case 'MSG_SEND':
-        if (currentLogin === parsedData.payload.message.to) console.log('hhh');
+        this.addMessage(parsedData.payload.message);
+        break;
+      case 'MSG_FROM_USER':
+        this.showMessages(parsedData.payload.messages);
         break;
       default:
     }
@@ -68,6 +73,20 @@ class Controller {
     if (msgTitle.textContent && msgTitle.textContent.length > 0) {
       msgTitle.textContent = `${msgTitle.textContent?.split(' ')[0]} ${isLogined ? 'Online' : 'Offline'}`;
     }
+  }
+
+  showMessages(data: MessageType[]) {
+    const msgHistory = new MessageHistory(data).getNode();
+    getDomElement('.msg-window__title').insertAdjacentElement('afterend', msgHistory);
+    msgHistory.scrollTop = msgHistory.scrollHeight - msgHistory.offsetHeight;
+  }
+
+  addMessage(data: MessageType) {
+    try {
+      const msgHistory = getDomElement('.msg-history');
+      msgHistory.appendChild(new MessageItem(data).getNode());
+      msgHistory.scrollTop = msgHistory.scrollHeight - msgHistory.offsetHeight;
+    } catch {}
   }
 }
 
