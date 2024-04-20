@@ -100,6 +100,20 @@ class API {
     };
     socket.send(JSON.stringify(data));
   }
+
+  changeReadStatus(msgId: string) {
+    id++;
+    const data = {
+      id: `${id}`,
+      type: 'MSG_READ',
+      payload: {
+        message: {
+          id: msgId,
+        },
+      },
+    };
+    socket.send(JSON.stringify(data));
+  }
 }
 
 export default API;

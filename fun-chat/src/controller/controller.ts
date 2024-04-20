@@ -48,6 +48,9 @@ class Controller {
       case 'MSG_FROM_USER':
         this.showMessages(parsedData.payload.messages);
         break;
+      case 'MSG_READ':
+        this.changeMsgStatus(parsedData.payload.message);
+        break;
       default:
     }
   }
@@ -76,16 +79,31 @@ class Controller {
   }
 
   showMessages(data: MessageType[]) {
-    const msgHistory = new MessageHistory(data).getNode();
-    getDomElement('.msg-window__title').insertAdjacentElement('afterend', msgHistory);
-    msgHistory.scrollTop = msgHistory.scrollHeight - msgHistory.offsetHeight;
+    const msgHistory = new MessageHistory(data);
+    getDomElement('.msg-window__title').insertAdjacentElement('afterend', msgHistory.getNode());
+    msgHistory.getNode().scrollTop = msgHistory.getNode().scrollHeight - msgHistory.getNode().offsetHeight;
+    // msgHistory.setListener('scroll', () => msgHistory.changeStatus(data));
   }
 
   addMessage(data: MessageType) {
-    try {
-      const msgHistory = getDomElement('.msg-history');
+    const msgHistory = document.querySelector<HTMLDivElement>('.msg-history');
+    if (msgHistory) {
       msgHistory.appendChild(new MessageItem(data).getNode());
       msgHistory.scrollTop = msgHistory.scrollHeight - msgHistory.offsetHeight;
+    }
+  }
+
+  scrollHistory() {
+    const line = getDomElement('.dividing-line');
+    console.log(line.getBoundingClientRect().top);
+  }
+
+  changeMsgStatus(data: { id: string; status: { isReaded: boolean } }) {
+    try {
+      const message = getDomElement(`#m${data.id}`);
+      message.dataset.status = 'Readed';
+      if (message.children[2].textContent) message.children[2].textContent = 'Readed';
+      getDomElement('.new').classList.remove('new');
     } catch {}
   }
 }

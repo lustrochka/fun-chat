@@ -60,6 +60,10 @@ body {
   background-image: url(./assets/rs-logo-NlzdOV4A.webp);
 }
 
+.user-list {
+  overflow: auto;
+}
+
 .active-users,
 .inactive-users {
   list-style-type: none;
@@ -96,12 +100,35 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  padding: 10px;
+}
+
+.dividing-line {
+  height: 2px;
+  background-color: black;
+  margin-bottom: 10px;
 }
 
 .msg-item {
   width: 50%;
   background-color: #c2bdbd;
   padding: 10px;
+  position: relative;
+}
+
+.new {
+  margin-top: 20px;
+}
+
+.new::before {
+  content: 'New messages';
+  display: block;
+  height: 2px;
+  width: 200%;
+  background-color: black;
+  position: absolute;
+  top: -20px;
+  left: 0;
 }
 
 .msg-title {
@@ -120,4 +147,9 @@ body {
 
 .right {
   align-self: end;
+}
+
+.msg-status {
+  text-align: end;
+  font-size: 12px;
 }
