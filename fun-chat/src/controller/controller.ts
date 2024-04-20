@@ -51,6 +51,9 @@ class Controller {
       case 'MSG_READ':
         this.changeMsgStatus(parsedData.payload.message);
         break;
+      case 'MSG_DELETE':
+        this.deleteMessage(parsedData.payload.message.id);
+        break;
       default:
     }
   }
@@ -104,6 +107,12 @@ class Controller {
       message.dataset.status = 'Readed';
       if (message.children[2].textContent) message.children[2].textContent = 'Readed';
       getDomElement('.new').classList.remove('new');
+    } catch {}
+  }
+
+  deleteMessage(id: string) {
+    try {
+      getDomElement(`#m${id}`).remove();
     } catch {}
   }
 }

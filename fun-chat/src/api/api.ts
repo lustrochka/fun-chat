@@ -114,6 +114,20 @@ class API {
     };
     socket.send(JSON.stringify(data));
   }
+
+  deleteMessage(msgId: string) {
+    id++;
+    const data = {
+      id: `${id}`,
+      type: 'MSG_DELETE',
+      payload: {
+        message: {
+          id: msgId,
+        },
+      },
+    };
+    socket.send(JSON.stringify(data));
+  }
 }
 
 export default API;

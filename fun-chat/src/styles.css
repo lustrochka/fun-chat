@@ -153,3 +153,11 @@ body {
   text-align: end;
   font-size: 12px;
 }
+
+.message-modal {
+  position: absolute;
+  background-color: #efeaea;
+  padding: 10px 20px;
+  text-align: left;
+  top: 5px;
+}

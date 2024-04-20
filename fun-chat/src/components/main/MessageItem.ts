@@ -1,6 +1,7 @@
 import Component from '../basic-components/component';
 import { div, span } from '../basic-components/tags';
 import { MessageType } from '../../types';
+import API from '../../api/api';
 
 class MessageItem extends Component {
   constructor({ id, from, text, datetime, status }: MessageType, isLineAdded?: boolean, addLine?: () => void) {
@@ -18,7 +19,6 @@ class MessageItem extends Component {
     } else {
       msgStatusAttr = 'Sent';
     }
-    if (isFromCurrent) msgStatus.changeText(`${msgStatusAttr}`);
     let classList = isFromCurrent ? 'msg-item right' : 'msg-item left';
     if (!isFromCurrent && msgStatusAttr !== 'Readed' && !document.querySelector('.new') && !isLineAdded) {
       classList += ' new';
@@ -37,6 +37,38 @@ class MessageItem extends Component {
       msgStatus
     );
     this.addAttributes({ id: `m${id}`, 'data-status': `${msgStatusAttr}` });
+    if (isFromCurrent) {
+      msgStatus.changeText(`${msgStatusAttr}`);
+      this.setListener('contextmenu', (e) => {
+        e.preventDefault();
+        this.showModal(id);
+      });
+    }
+  }
+
+  showModal(id: string) {
+    const editBtn = div('edit-button');
+    editBtn.changeText('Edit');
+
+    const deleteBtn = div('delete-button');
+    deleteBtn.changeText('Delete');
+
+    const modal = div('message-modal', editBtn, deleteBtn);
+
+    deleteBtn.setListener('click', () => {
+      new API().deleteMessage(id);
+      modal.destroy();
+    });
+    document.addEventListener(
+      'click',
+      (e) => {
+        if (e.target && e.target instanceof HTMLElement) {
+          if (!e.target.closest('.message-modal')) modal.destroy();
+        }
+      },
+      { once: true }
+    );
+    this.appendChildren(modal);
   }
 }
 
