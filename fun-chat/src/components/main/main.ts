@@ -4,7 +4,7 @@ import Filter from './filter';
 import MessageWindow from './messageWindow';
 import Footer from './footer';
 import API from '../../api/api';
-import { div } from '../basic-components/tags';
+import { div, ul } from '../basic-components/tags';
 
 class Main extends Component {
   #msgWindow;
@@ -12,7 +12,14 @@ class Main extends Component {
   constructor() {
     super('div', 'main', new Header());
     this.#msgWindow = new MessageWindow();
-    this.appendChildren(div('main__middle', div('msg-wrapper', new Filter()), this.#msgWindow), new Footer());
+    this.appendChildren(
+      div(
+        'main__middle',
+        div('msg-wrapper', new Filter(), div('user-list', ul('active-users'), ul('inactive-users'))),
+        this.#msgWindow
+      ),
+      new Footer()
+    );
     new API().getOnlineUsers();
     new API().getOfflineUsers();
     this.setListener('click', (e) => this.changeMsgWindow(e));

@@ -12,7 +12,7 @@ class About extends Component {
     );
 
     const author = div('about-page__author');
-    author.changeText('author Lustrochka');
+    author.changeText('author: Lustrochka');
 
     super(
       'div',

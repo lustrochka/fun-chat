@@ -100,7 +100,7 @@ class Controller {
   }
 
   manageUsersList(data: UnreadMsgsType) {
-    getDomElement('.filter').insertAdjacentElement('afterend', new UserList(data).getNode());
+    getDomElement('.user-list').replaceWith(new UserList(data).getNode());
   }
 
   changeUsersStatus({ login, isLogined }: UsersData) {
