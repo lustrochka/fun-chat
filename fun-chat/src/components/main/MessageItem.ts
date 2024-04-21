@@ -2,15 +2,14 @@ import Component from '../basic-components/component';
 import { div, span } from '../basic-components/tags';
 import { MessageType } from '../../types';
 import API from '../../api/api';
+import { getDomElement } from '../../utils/getDomElement';
 
 class MessageItem extends Component {
+  #msgText;
+
   constructor({ id, from, text, datetime, status }: MessageType, isLineAdded?: boolean, addLine?: () => void) {
     const isFromCurrent = sessionStorage.getItem('login') === from;
 
-    const msgText = div('msg-text');
-    msgText.changeText(text);
-
-    const msgStatus = div('msg-status');
     let msgStatusAttr;
     if (status.isReaded) {
       msgStatusAttr = 'Readed';
@@ -32,13 +31,23 @@ class MessageItem extends Component {
         'msg-title',
         span('', `${isFromCurrent ? 'You' : from}`),
         span('', `${new Date(datetime).toLocaleString('en-GB')}`)
-      ),
-      msgText,
-      msgStatus
+      )
     );
+
+    this.#msgText = div('msg-text');
+    this.#msgText.changeText(text);
+
+    this.appendChildren(
+      this.#msgText,
+      div(
+        'msg-status',
+        span('edited-status', `${status.isEdited ? 'Edited' : ''}`),
+        span('read-status', `${isFromCurrent ? msgStatusAttr : ''}`)
+      )
+    );
+
     this.addAttributes({ id: `m${id}`, 'data-status': `${msgStatusAttr}` });
     if (isFromCurrent) {
-      msgStatus.changeText(`${msgStatusAttr}`);
       this.setListener('contextmenu', (e) => {
         e.preventDefault();
         this.showModal(id);
@@ -55,10 +64,16 @@ class MessageItem extends Component {
 
     const modal = div('message-modal', editBtn, deleteBtn);
 
+    editBtn.setListener('click', () => {
+      this.editMessage(id);
+      modal.destroy();
+    });
+
     deleteBtn.setListener('click', () => {
       new API().deleteMessage(id);
       modal.destroy();
     });
+
     document.addEventListener(
       'click',
       (e) => {
@@ -69,6 +84,12 @@ class MessageItem extends Component {
       { once: true }
     );
     this.appendChildren(modal);
+  }
+
+  editMessage(id: string) {
+    getDomElement<HTMLInputElement>('.input').value = this.#msgText.getNode().textContent || '';
+    getDomElement('.send-button').removeAttribute('disabled');
+    sessionStorage.setItem('editing-id', `${id}`);
   }
 }
 

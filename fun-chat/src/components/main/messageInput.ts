@@ -3,7 +3,7 @@ import Button from '../basic-components/button';
 import Input from '../basic-components/input';
 import API from '../../api/api';
 
-class MessageInput extends Component {
+class MessageInput extends Component<HTMLFormElement> {
   #button;
 
   constructor(isDisabled: boolean, login: string) {
@@ -14,11 +14,23 @@ class MessageInput extends Component {
         : this.#button.addAttributes({ disabled: 'true' });
     });
     if (isDisabled) text.addAttributes({ disabled: 'true' });
+
     this.#button = new Button('send-button', 'Send', { disabled: 'true' });
     this.appendChildren(text, this.#button);
+
     this.setListener('submit', (e) => {
       e.preventDefault();
-      if (text.getValue().length > 0) new API().sendMessage(text.getValue(), login);
+      const id = sessionStorage.getItem('editing-id');
+
+      if (id) {
+        new API().editMessage(id, text.getValue());
+        sessionStorage.removeItem('editing-id');
+      } else if (text.getValue().length > 0) {
+        new API().sendMessage(text.getValue(), login);
+      }
+
+      this.#button.addAttributes({ disabled: 'true' });
+      this.getNode().reset();
     });
   }
 }

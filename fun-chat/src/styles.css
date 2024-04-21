@@ -150,7 +150,8 @@ body {
 }
 
 .msg-status {
-  text-align: end;
+  display: flex;
+  justify-content: space-between;
   font-size: 12px;
 }
 
@@ -160,4 +161,15 @@ body {
   padding: 10px 20px;
   text-align: left;
   top: 5px;
+}
+
+.edit-button,
+.delete-button {
+  padding: 0 5px;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  background-color: white;
+  cursor: pointer;
 }

@@ -128,6 +128,21 @@ class API {
     };
     socket.send(JSON.stringify(data));
   }
+
+  editMessage(msgId: string, text: string) {
+    id++;
+    const data = {
+      id: `${id}`,
+      type: 'MSG_EDIT',
+      payload: {
+        message: {
+          id: msgId,
+          text,
+        },
+      },
+    };
+    socket.send(JSON.stringify(data));
+  }
 }
 
 export default API;

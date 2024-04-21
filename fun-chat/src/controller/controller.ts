@@ -54,6 +54,9 @@ class Controller {
       case 'MSG_DELETE':
         this.deleteMessage(parsedData.payload.message.id);
         break;
+      case 'MSG_EDIT':
+        this.editMessage(parsedData.payload.message.id, parsedData.payload.message.text);
+        break;
       default:
     }
   }
@@ -105,7 +108,8 @@ class Controller {
     try {
       const message = getDomElement(`#m${data.id}`);
       message.dataset.status = 'Readed';
-      if (message.children[2].textContent) message.children[2].textContent = 'Readed';
+      const status = message.children[2].lastChild;
+      if (status && status.textContent) status.textContent = 'Readed';
       getDomElement('.new').classList.remove('new');
     } catch {}
   }
@@ -113,6 +117,15 @@ class Controller {
   deleteMessage(id: string) {
     try {
       getDomElement(`#m${id}`).remove();
+    } catch {}
+  }
+
+  editMessage(id: string, text: string) {
+    try {
+      const message = getDomElement(`#m${id}`);
+      const status = message.children[2].firstChild;
+      if (status) status.textContent = 'Edited';
+      message.children[1].textContent = text;
     } catch {}
   }
 }
