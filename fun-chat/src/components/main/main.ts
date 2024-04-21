@@ -20,13 +20,14 @@ class Main extends Component {
 
   changeMsgWindow(e: Event) {
     const element = e.target;
-    if (element instanceof HTMLElement && element.classList.contains('users-item')) {
-      const login = element.textContent || '';
+    if (element instanceof HTMLElement && element.closest('.users-item')) {
+      const login = element.closest('.users-item')?.children[0].textContent || '';
       const isOnline = element.parentElement?.className === 'active-users';
       const newWindow = new MessageWindow(login, isOnline);
       this.#msgWindow.getNode().replaceWith(newWindow.getNode());
       this.#msgWindow = newWindow;
       new API().getMessages(login);
+      element.closest('.users-item')?.classList.add('active');
     }
   }
 }

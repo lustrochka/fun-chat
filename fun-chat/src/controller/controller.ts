@@ -3,15 +3,18 @@ import Router from '../router/router';
 import UserList from '../components/main/user-list';
 import MessageHistory from '../components/main/messageHistory';
 import MessageItem from '../components/main/MessageItem';
-import { Items, ResponseType, UsersList, UsersData, MessageType } from '../types';
-import { li } from '../components/basic-components/tags';
+import { Items, ResponseType, UsersData, MessageType, UnreadMsgsType } from '../types';
+import { li, span } from '../components/basic-components/tags';
+import API from '../api/api';
 
 const LOGIN_ERRORS: Items = {
   'incorrect password': 'Incorrect password',
   'a user with this login is already authorized': 'This user is already authorized',
 };
 
-const users: UsersList = { active: [], inactive: [] };
+const users: UnreadMsgsType = { active: {}, inactive: {} };
+let isRenderingUsers = false;
+let endId: number;
 
 class Controller {
   checkData(data: string) {
@@ -32,11 +35,15 @@ class Controller {
         new Router().changeUrl('/login');
         break;
       case 'USER_ACTIVE':
-        users.active = parsedData.payload.users.filter((el: UsersData) => el.login !== currentLogin);
+        users.active = Object.fromEntries(
+          parsedData.payload.users
+            .filter((el: UsersData) => el.login !== currentLogin)
+            .map((el: UsersData) => [el.login, 0])
+        );
         break;
       case 'USER_INACTIVE':
-        users.inactive = parsedData.payload.users;
-        this.manageUsersList(users);
+        users.inactive = Object.fromEntries(parsedData.payload.users.map((el: UsersData) => [el.login, 0]));
+        this.getUnreadMessages(users, parsedData.id);
         break;
       case 'USER_EXTERNAL_LOGIN':
       case 'USER_EXTERNAL_LOGOUT':
@@ -46,7 +53,9 @@ class Controller {
         this.addMessage(parsedData.payload.message);
         break;
       case 'MSG_FROM_USER':
-        this.showMessages(parsedData.payload.messages);
+        isRenderingUsers
+          ? this.addMessagesCount(parsedData.payload.messages, parsedData.id)
+          : this.showMessages(parsedData.payload.messages);
         break;
       case 'MSG_READ':
         this.changeMsgStatus(parsedData.payload.message);
@@ -56,6 +65,9 @@ class Controller {
         break;
       case 'MSG_EDIT':
         this.editMessage(parsedData.payload.message.id, parsedData.payload.message.text);
+        break;
+      case 'MSG_DELIVER':
+        this.deliverMessage(parsedData.payload.message.id);
         break;
       default:
     }
@@ -67,15 +79,35 @@ class Controller {
     getDomElement('.error-message__text').textContent = `${LOGIN_ERRORS[data.payload.error]}`;
   }
 
-  manageUsersList(data: UsersList) {
+  getUnreadMessages(data: UnreadMsgsType, id: string) {
+    isRenderingUsers = true;
+    endId = Number(id) + [...Object.keys(users.active), ...Object.keys(users.inactive)].length;
+    Object.keys(data.active).forEach((user) => new API().getMessages(user));
+    Object.keys(data.inactive).forEach((user) => new API().getMessages(user));
+  }
+
+  addMessagesCount(data: MessageType[], id: string) {
+    data.forEach((x) => {
+      if (!x.status.isReaded) {
+        if (Object.keys(users.active).includes(x.from)) users.active[x.from]++;
+        if (Object.keys(users.inactive).includes(x.from)) users.inactive[x.from]++;
+      }
+    });
+    if (+id === endId) {
+      isRenderingUsers = false;
+      this.manageUsersList(users);
+    }
+  }
+
+  manageUsersList(data: UnreadMsgsType) {
     getDomElement('.filter').insertAdjacentElement('afterend', new UserList(data).getNode());
   }
 
   changeUsersStatus({ login, isLogined }: UsersData) {
     const active = getDomElement('.active-users');
     const inactive = getDomElement('.inactive-users');
-    let targetUser = Array.from(getDomElements('.users-item')).filter((el) => el.textContent === login)[0];
-    if (!targetUser) targetUser = li('users-item', login).getNode();
+    let targetUser = Array.from(getDomElements('.users-item')).filter((el) => el.children[0].textContent === login)[0];
+    if (!targetUser) targetUser = li('users-item', span('name', login)).getNode();
     isLogined ? active.appendChild(targetUser) : inactive.appendChild(targetUser);
 
     const msgTitle = getDomElement('.msg-window__title');
@@ -97,6 +129,12 @@ class Controller {
       msgHistory.appendChild(new MessageItem(data).getNode());
       msgHistory.scrollTop = msgHistory.scrollHeight - msgHistory.offsetHeight;
     }
+    getDomElements('.users-item').forEach((el) => {
+      if (el.children[0].textContent === data.from) {
+        const count = el.children[1].textContent || '0';
+        el.children[1].textContent = `${Number(count) + 1}`;
+      }
+    });
   }
 
   scrollHistory() {
@@ -126,6 +164,15 @@ class Controller {
       const status = message.children[2].firstChild;
       if (status) status.textContent = 'Edited';
       message.children[1].textContent = text;
+    } catch {}
+  }
+
+  deliverMessage(id: string) {
+    try {
+      const message = getDomElement(`#m${id}`);
+      message.dataset.status = 'Delivered';
+      const status = message.children[2].lastChild;
+      if (status && status.textContent) status.textContent = 'Delivered';
     } catch {}
   }
 }

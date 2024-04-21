@@ -40,8 +40,4 @@ export const a = (className: string, text: string, href: string) => {
 };
 
 export const ul = (className: string, ...children: Component[]) => new Component('ul', className, ...children);
-export const li = (className: string, text: string, ...children: Component[]) => {
-  const element = new Component('li', className, ...children);
-  element.changeText(text);
-  return element;
-};
+export const li = (className: string, ...children: Component[]) => new Component('li', className, ...children);

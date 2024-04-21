@@ -36,3 +36,12 @@ export type MessageType = {
     isEdited: boolean;
   };
 };
+
+export type UnreadMsgsType = {
+  active: {
+    [key: string]: number;
+  };
+  inactive: {
+    [key: string]: number;
+  };
+};

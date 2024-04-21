@@ -14,7 +14,7 @@ class Filter extends Component {
   filterList() {
     const items = getDomElements('.users-item');
     items.forEach((item) => {
-      item.hidden = item.textContent?.indexOf(this.#input.getValue()) === -1;
+      item.hidden = item.children[0].textContent?.indexOf(this.#input.getValue()) === -1;
     });
   }
 }
