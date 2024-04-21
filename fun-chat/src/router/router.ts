@@ -1,5 +1,6 @@
 import LoginPage from '../components/login-page/login-page';
 import Main from '../components/main/main';
+import About from '../components/about/about';
 
 const MIN_STORAGE_LEN = 1;
 
@@ -25,9 +26,16 @@ class Router {
           this.changeUrl('/login');
         }
         break;
+      case '/about':
+        document.body.appendChild(new About().getNode());
+        break;
       default:
         console.log('404');
     }
+  }
+
+  return() {
+    window.history.back();
   }
 }
 

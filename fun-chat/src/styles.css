@@ -22,6 +22,11 @@ body {
   font-size: 14px;
 }
 
+.button {
+  display: block;
+  margin: 0 0 10px 60px;
+}
+
 .modal {
   height: 100vh;
   width: 100vw;
@@ -183,4 +188,17 @@ body {
   color: red;
   text-align: center;
   margin-left: 20px;
+}
+
+.about-page {
+  width: 350px;
+  text-align: center;
+}
+
+.about-page__author {
+  margin: 10px 0;
+}
+
+.logout-button {
+  margin-left: 10px;
 }

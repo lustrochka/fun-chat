@@ -6,6 +6,7 @@ import Modal from './modal';
 import API from '../../api/api';
 import { span } from '../basic-components/tags';
 import { PatternsType } from '../../types';
+import Router from '../../router/router';
 
 const PATTERNS: PatternsType = {
   login: [
@@ -81,10 +82,10 @@ class LoginPage extends Component<HTMLFormElement> {
       this.#passInput,
       this.#passMsg,
       this.#submitButton,
+      new Button('login__about-button button', 'About', { type: 'button' }, () => new Router().changeUrl('/about')),
       new Modal()
     );
     this.setListener('submit', (e: Event) => {
-      console.log('s');
       if (this.checkFormValidity()) this.sendLogin();
       e.preventDefault();
     });
