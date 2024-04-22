@@ -47,6 +47,7 @@ body {
 }
 
 .main {
+  max-width: 1200px;
   width: 100vw;
   height: 100vh;
 }
@@ -56,7 +57,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 30px;
 }
 
 .footer__school,
@@ -66,7 +67,10 @@ body {
 }
 
 .footer__logo {
-  background-image: url(./assets/rs-logo-NlzdOV4A.webp);
+  width: 40px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url(./assets/logo-rsschool3.png);
 }
 
 .user-list {
@@ -95,6 +99,14 @@ body {
 .main__middle {
   display: flex;
   height: 80%;
+  padding: 30px;
+}
+
+.msg-window,
+.msg-wrapper {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .msg-window {
@@ -102,6 +114,26 @@ body {
   grid-template-rows: 30px 1fr 30px;
   width: 80%;
   text-align: center;
+  margin-left: 10px;
+}
+
+.msg-window__title {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  padding: 0 30px;
+}
+
+.user-status {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+.msg-input {
+  border-top: 1px solid black;
 }
 
 .msg-history {
@@ -119,6 +151,7 @@ body {
 }
 
 .msg-item {
+  min-width: 330px;
   width: 50%;
   background-color: #c2bdbd;
   padding: 10px;
@@ -205,4 +238,32 @@ body {
 
 .logout-button {
   margin-left: 10px;
+}
+
+.input {
+  margin: 10px;
+}
+
+@media (max-width: 650px) {
+  .main__middle {
+    flex-direction: column-reverse;
+    height: auto;
+    gap: 10px;
+    padding: 0 20px 20px;
+  }
+  .user-list {
+    max-height: 80px;
+  }
+  .msg-window {
+    width: auto;
+    margin-left: 0;
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 430px) {
+  .msg-item {
+    min-width: auto;
+    width: 100%;
+  }
 }

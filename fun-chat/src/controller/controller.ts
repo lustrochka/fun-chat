@@ -110,15 +110,16 @@ class Controller {
     if (!targetUser) targetUser = li('users-item', span('name', login), span('count-messages', '')).getNode();
     isLogined ? active.appendChild(targetUser) : inactive.appendChild(targetUser);
 
-    const msgTitle = getDomElement('.msg-window__title');
+    const msgTitle = getDomElement('.user-status');
     if (msgTitle.textContent && msgTitle.textContent.length > 0) {
-      msgTitle.textContent = `${msgTitle.textContent?.split(' ')[0]} ${isLogined ? 'Online' : 'Offline'}`;
+      msgTitle.textContent = `${isLogined ? 'Online' : 'Offline'}`;
+      isLogined ? msgTitle.classList.remove('red') : msgTitle.classList.add('red');
     }
   }
 
   showMessages(data: MessageType[]) {
     const msgHistory = new MessageHistory(data);
-    getDomElement('.msg-window__title').insertAdjacentElement('afterend', msgHistory.getNode());
+    getDomElement('.msg-history').replaceWith(msgHistory.getNode());
     this.scrollHistory();
   }
 

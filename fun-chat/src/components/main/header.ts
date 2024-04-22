@@ -9,7 +9,7 @@ class Header extends Component {
     super(
       'header',
       'header',
-      span('username', `Hello, ${sessionStorage.getItem('login') || ''}!`),
+      span('username', `User: ${sessionStorage.getItem('login') || ''}`),
       h1('header__title', 'Fun chat'),
       div(
         'buttons',
