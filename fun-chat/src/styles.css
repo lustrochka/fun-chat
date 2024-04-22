@@ -7,6 +7,10 @@ body {
   align-items: center;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .login-form {
   width: 350px;
 }

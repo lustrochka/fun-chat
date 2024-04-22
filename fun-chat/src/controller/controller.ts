@@ -119,7 +119,7 @@ class Controller {
   showMessages(data: MessageType[]) {
     const msgHistory = new MessageHistory(data);
     getDomElement('.msg-window__title').insertAdjacentElement('afterend', msgHistory.getNode());
-    msgHistory.getNode().scrollTop = msgHistory.getNode().scrollHeight - msgHistory.getNode().offsetHeight;
+    this.scrollHistory();
     // msgHistory.setListener('scroll', () => msgHistory.changeStatus(data));
   }
 
@@ -127,7 +127,7 @@ class Controller {
     const msgHistory = document.querySelector<HTMLDivElement>('.msg-history');
     if (msgHistory) {
       msgHistory.appendChild(new MessageItem(data).getNode());
-      msgHistory.scrollTop = msgHistory.scrollHeight - msgHistory.offsetHeight;
+      this.scrollHistory();
     }
     getDomElements('.users-item').forEach((el) => {
       if (el.children[0].textContent === data.from) {
@@ -138,8 +138,16 @@ class Controller {
   }
 
   scrollHistory() {
-    const line = getDomElement('.dividing-line');
-    console.log(line.getBoundingClientRect().top);
+    const LINE_MARGIN = 30;
+    try {
+      const line = getDomElement('.new');
+      const msgHistory = getDomElement('.msg-history');
+      msgHistory.scrollTop =
+        line.getBoundingClientRect().top + msgHistory.scrollTop - msgHistory.getBoundingClientRect().top - LINE_MARGIN; // + msgHistory.scrollTop;
+    } catch {
+      const msgHistory = document.querySelector<HTMLDivElement>('.msg-history');
+      if (msgHistory) msgHistory.scrollTop = msgHistory.scrollHeight - msgHistory.offsetHeight;
+    }
   }
 
   changeMsgStatus(data: { id: string; status: { isReaded: boolean } }) {
