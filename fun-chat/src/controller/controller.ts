@@ -107,7 +107,7 @@ class Controller {
     const active = getDomElement('.active-users');
     const inactive = getDomElement('.inactive-users');
     let targetUser = Array.from(getDomElements('.users-item')).filter((el) => el.children[0].textContent === login)[0];
-    if (!targetUser) targetUser = li('users-item', span('name', login)).getNode();
+    if (!targetUser) targetUser = li('users-item', span('name', login), span('count-messages', '')).getNode();
     isLogined ? active.appendChild(targetUser) : inactive.appendChild(targetUser);
 
     const msgTitle = getDomElement('.msg-window__title');
