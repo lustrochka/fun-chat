@@ -24,7 +24,9 @@ class MessageHistory extends Component {
     elements.forEach((x) => {
       if (x.dataset.status !== 'Readed') new API().changeReadStatus(x.id.slice(1));
     });
-    getDomElement('.active').children[1].textContent = '';
+    try {
+      getDomElement('.active').children[1].textContent = '';
+    } catch {}
   }
 }
 

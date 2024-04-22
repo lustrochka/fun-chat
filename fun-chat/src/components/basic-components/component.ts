@@ -23,8 +23,8 @@ class Component<T extends HTMLElement = HTMLElement> {
     this.#node.classList.remove(className);
   }
 
-  setListener(event: string, listener: (arg: Event) => void) {
-    this.#node.addEventListener(event, listener);
+  setListener(event: string, listener: (arg: Event) => void, once = false) {
+    this.#node.addEventListener(event, listener, { once });
   }
 
   removeListener(event: string, listener: (arg: Event) => void) {

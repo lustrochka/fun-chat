@@ -120,7 +120,6 @@ class Controller {
     const msgHistory = new MessageHistory(data);
     getDomElement('.msg-window__title').insertAdjacentElement('afterend', msgHistory.getNode());
     this.scrollHistory();
-    // msgHistory.setListener('scroll', () => msgHistory.changeStatus(data));
   }
 
   addMessage(data: MessageType) {
@@ -147,6 +146,18 @@ class Controller {
     } catch {
       const msgHistory = document.querySelector<HTMLDivElement>('.msg-history');
       if (msgHistory) msgHistory.scrollTop = msgHistory.scrollHeight - msgHistory.offsetHeight;
+    } finally {
+      const msgHistory = document.querySelector<HTMLDivElement>('.msg-history');
+      if (msgHistory) {
+        msgHistory.addEventListener('wheel', () => {
+          try {
+            getDomElements('.msg-item.left').forEach((x) => {
+              if (x.dataset.status !== 'Readed') new API().changeReadStatus(x.id.slice(1));
+            });
+            getDomElement('.active').children[1].textContent = '';
+          } catch {}
+        });
+      }
     }
   }
 
