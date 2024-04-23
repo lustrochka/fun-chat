@@ -83,9 +83,11 @@ class LoginPage extends Component<HTMLFormElement> {
       this.#passMsg,
       this.#submitButton,
       new Button('login__about-button button', 'About', { type: 'button' }, () => new Router().changeUrl('/about')),
+      new Input('', { type: 'submit', hidden: 'true' }),
       new Modal()
     );
     this.setListener('submit', (e: Event) => {
+      console.log('submit');
       if (this.checkFormValidity()) this.sendLogin();
       e.preventDefault();
     });
