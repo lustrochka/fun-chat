@@ -20,7 +20,7 @@ class About extends Component {
       h3('about-page__title', 'Fun chat'),
       description,
       author,
-      new Button('about-page__button', 'Return', {}, () => new Router().return())
+      new Button('about-page__button button', 'Return', {}, () => new Router().return())
     );
   }
 }

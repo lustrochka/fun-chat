@@ -13,8 +13,8 @@ class Header extends Component {
       h1('header__title', 'Fun chat'),
       div(
         'buttons',
-        new Button('header__about-button', 'About', { type: 'button' }, () => new Router().changeUrl('/about')),
-        new Button('logout-button', 'Log out', {}, () => new API().logOut())
+        new Button('header__about-button button', 'About', { type: 'button' }, () => new Router().changeUrl('/about')),
+        new Button('logout-button button', 'Log out', {}, () => new API().logOut())
       )
     );
   }

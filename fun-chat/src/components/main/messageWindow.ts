@@ -13,7 +13,7 @@ class MessageWindow extends Component {
     }
     this.appendChildren(
       div('msg-window__title', span('username', `${login || ''}`), span(`${className}`, `${statusText}`)),
-      div('msg-history'),
+      div('msg-history', span('msg-history__text', 'Choose user to send message')),
       new MessageInput(login === undefined, login || '')
     );
   }
