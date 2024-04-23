@@ -74,7 +74,8 @@ class Controller {
   }
 
   manageLogin(data: ResponseType) {
-    sessionStorage.clear();
+    sessionStorage.removeItem('login');
+    sessionStorage.removeItem('pass');
     getDomElement('.modal').hidden = false;
     getDomElement('.error-message__text').textContent = `${LOGIN_ERRORS[data.payload.error]}`;
   }
