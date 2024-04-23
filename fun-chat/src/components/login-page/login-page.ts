@@ -34,7 +34,7 @@ class LoginPage extends Component<HTMLFormElement> {
     super('form', 'login-form');
     this.#nameMsg = span('login-form__message', '');
     this.#passMsg = span('login-form__message', '');
-    this.#submitButton = new Button('login-form__button button', 'Login', { type: 'button', disabled: 'true' });
+    this.#submitButton = new Button('button', 'Login', { type: 'button', disabled: 'true' });
     this.#nameInput = new Input(
       'login-form__input',
       {
@@ -82,7 +82,7 @@ class LoginPage extends Component<HTMLFormElement> {
       this.#passInput,
       this.#passMsg,
       this.#submitButton,
-      new Button('login__about-button button', 'About', { type: 'button' }, () => new Router().changeUrl('/about')),
+      new Button('button', 'About', { type: 'button' }, () => new Router().changeUrl('/about')),
       new Input('', { type: 'submit', hidden: 'true' }),
       new Modal()
     );

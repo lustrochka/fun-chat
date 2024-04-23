@@ -5,17 +5,17 @@ import { UnreadMsgsType } from '../../types';
 class UserList extends Component {
   constructor(data: UnreadMsgsType) {
     console.log(data);
-    super('div', 'user-list');
+    super('div', 'users-list');
     const active = ul(
       'active-users',
       ...Object.keys(data.active).map((el) =>
-        li('users-item', span('name', el), span('count-messages', `${data.active[el] || ''}`))
+        li('users-item', span('users-item__name', el), span('users-item__count-messages', `${data.active[el] || ''}`))
       )
     );
     const inactive = ul(
       'inactive-users',
       ...Object.keys(data.inactive).map((el) =>
-        li('users-item', span('name', el), span('count-messages', `${data.inactive[el] || ''}`))
+        li('users-item', span('users-item__name', el), span('users-item__count-messages', `${data.inactive[el] || ''}`))
       )
     );
     this.appendChildren(active, inactive);

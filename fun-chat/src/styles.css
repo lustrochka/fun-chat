@@ -91,7 +91,7 @@ ul {
   height: 100vh;
 }
 
-.username {
+.header__username {
   font-size: 18px;
 }
 
@@ -120,7 +120,7 @@ ul {
   background-image: url(./assets/logo-rsschool3.png);
 }
 
-.user-list {
+.users-list {
   overflow: auto;
 }
 
@@ -148,14 +148,14 @@ ul {
   color: red;
 }
 
-.main__middle {
+.middle {
   display: flex;
   height: 80%;
   padding: 30px;
 }
 
 .msg-window,
-.msg-wrapper {
+.contacts {
   border: 1px solid black;
   padding: 10px;
   border-radius: 5px;
@@ -282,7 +282,7 @@ ul {
   cursor: pointer;
 }
 
-.count-messages:not(:empty) {
+.users-item__count-messages:not(:empty) {
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -293,22 +293,22 @@ ul {
   margin-left: 20px;
 }
 
-.about-page {
+.about {
   width: 350px;
   text-align: center;
   padding: 15px;
   border: 1px solid black;
 }
 
-.about-page__title {
+.about__title {
   margin-top: 0;
 }
 
-.about-page__author {
+.about__author {
   margin: 10px 0;
 }
 
-.about-page__button {
+.about__button {
   width: 100px;
   margin: 0 auto;
 }
@@ -347,13 +347,13 @@ ul {
 }
 
 @media (max-width: 650px) {
-  .main__middle {
+  .middle {
     flex-direction: column-reverse;
     height: auto;
     gap: 10px;
     padding: 0 20px 20px;
   }
-  .user-list {
+  .users-list {
     max-height: 80px;
   }
   .msg-window {

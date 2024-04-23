@@ -101,14 +101,15 @@ class Controller {
   }
 
   manageUsersList(data: UnreadMsgsType) {
-    getDomElement('.user-list').replaceWith(new UserList(data).getNode());
+    getDomElement('.users-list').replaceWith(new UserList(data).getNode());
   }
 
   changeUsersStatus({ login, isLogined }: UsersData) {
     const active = getDomElement('.active-users');
     const inactive = getDomElement('.inactive-users');
     let targetUser = Array.from(getDomElements('.users-item')).filter((el) => el.children[0].textContent === login)[0];
-    if (!targetUser) targetUser = li('users-item', span('name', login), span('count-messages', '')).getNode();
+    if (!targetUser)
+      targetUser = li('users-item', span('users-item__name', login), span('users-item__count-messages', '')).getNode();
     isLogined ? active.appendChild(targetUser) : inactive.appendChild(targetUser);
 
     const msgTitle = getDomElement('.user-status');

@@ -15,8 +15,8 @@ class Main extends Component {
     this.#msgWindow = new MessageWindow();
     this.appendChildren(
       div(
-        'main__middle',
-        div('msg-wrapper', new Filter(), div('user-list', ul('active-users'), ul('inactive-users'))),
+        'middle',
+        div('contacts', new Filter(), div('users-list', ul('active-users'), ul('inactive-users'))),
         this.#msgWindow
       ),
       new Footer()

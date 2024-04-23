@@ -9,11 +9,11 @@ class Header extends Component {
     super(
       'header',
       'header',
-      span('username', `User: ${sessionStorage.getItem('login') || ''}`),
+      span('header__username', `User: ${sessionStorage.getItem('login') || ''}`),
       h1('header__title', 'Fun chat'),
       div(
         'buttons',
-        new Button('header__about-button button', 'About', { type: 'button' }, () => new Router().changeUrl('/about')),
+        new Button('button', 'About', { type: 'button' }, () => new Router().changeUrl('/about')),
         new Button('logout-button button', 'Log out', {}, () => new API().logOut())
       )
     );
