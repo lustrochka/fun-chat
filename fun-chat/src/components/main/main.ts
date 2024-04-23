@@ -5,10 +5,7 @@ import MessageWindow from './messageWindow';
 import Footer from './footer';
 import API from '../../api/api';
 import { div, ul } from '../basic-components/tags';
-import socket from '../../api/socket';
 import { getDomElements } from '../../utils/getDomElement';
-
-console.log(socket);
 
 class Main extends Component {
   #msgWindow;

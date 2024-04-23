@@ -4,6 +4,7 @@ import { UnreadMsgsType } from '../../types';
 
 class UserList extends Component {
   constructor(data: UnreadMsgsType) {
+    console.log(data);
     super('div', 'user-list');
     const active = ul(
       'active-users',

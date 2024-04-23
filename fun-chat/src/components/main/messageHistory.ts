@@ -12,7 +12,6 @@ class MessageHistory extends Component {
       isLineAdded = true;
     };
     data.forEach((el) => {
-      // console.log(line.getNode().getBoundingClientRect().top, this.getNode().getBoundingClientRect().top);
       this.appendChildren(new MessageItem(el, isLineAdded, addLine));
     });
     this.setListener('click', () => this.changeStatus());

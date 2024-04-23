@@ -1,23 +1,42 @@
 import Controller from '../controller/controller';
+import Router from '../router/router';
+import ModalConnection from '../components/modalConnection/modalConnection';
+import API from './api';
 
-const socket = new WebSocket('ws://localhost:4000');
+let socket: WebSocket;
 const controller = new Controller();
-sessionStorage.setItem('isOpened', 'false');
+const modal = new ModalConnection();
 
-socket.onopen = function () {
-  console.log('opened');
-  sessionStorage.setItem('isOpened', 'true');
-};
+class Socket {
+  setSocket() {
+    socket = new WebSocket('ws://localhost:4000');
+    sessionStorage.setItem('isOpened', 'false');
+    socket.onopen = function () {
+      modal.destroy();
+      console.log('opened');
+      sessionStorage.setItem('isOpened', 'true');
+      if (sessionStorage.getItem('login'))
+        new API().sendLogin(sessionStorage.getItem('login') || '', sessionStorage.getItem('pass') || '');
+      new Router().changeUrl('/login');
+    };
 
-socket.onmessage = function (event) {
-  controller.checkData(event.data);
-};
+    socket.onmessage = function (event) {
+      controller.checkData(event.data);
+    };
 
-socket.onclose = function () {
-  console.log('closed');
-  sessionStorage.setItem('isOpened', 'false');
-};
+    socket.onclose = () => {
+      console.log('closed');
+      sessionStorage.setItem('isOpened', 'false');
+      document.body.appendChild(modal.getNode());
+      this.setSocket();
+    };
+  }
+
+  getSocket() {
+    return socket;
+  }
+}
 
 window.addEventListener('unload', () => sessionStorage.removeItem('isOpened'));
 
-export default socket;
+export default Socket;

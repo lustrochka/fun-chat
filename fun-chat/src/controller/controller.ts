@@ -125,7 +125,10 @@ class Controller {
 
   addMessage(data: MessageType) {
     const msgHistory = document.querySelector<HTMLDivElement>('.msg-history');
-    if (msgHistory) {
+    const current = document.querySelector<HTMLDivElement>('.active');
+    const toCurrent = current && current.firstChild?.textContent === data.from;
+    const fromCurrent = current && current.firstChild?.textContent === data.to;
+    if (msgHistory && (toCurrent || fromCurrent)) {
       msgHistory.appendChild(new MessageItem(data).getNode());
       this.scrollHistory();
     }

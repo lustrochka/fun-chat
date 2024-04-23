@@ -1,10 +1,12 @@
 import Router from './router/router';
+import Socket from './api/socket';
 import './styles.css';
 
-new Router().changeUrl('/login');
+new Socket().setSocket();
+
+window.addEventListener('unload', () => sessionStorage.removeItem('isOpened'));
 
 window.addEventListener('popstate', () => {
-  console.log('change');
   new Router().changePage();
 });
 

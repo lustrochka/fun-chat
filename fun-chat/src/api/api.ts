@@ -1,8 +1,14 @@
-import socket from './socket';
+import Socket from './socket';
 
 let id = 1;
 
 class API {
+  socket;
+
+  constructor() {
+    this.socket = new Socket().getSocket();
+  }
+
   sendLogin(login: string, pass: string) {
     id++;
     const data = {
@@ -15,7 +21,7 @@ class API {
         },
       },
     };
-    socket.send(JSON.stringify(data));
+    this.socket.send(JSON.stringify(data));
   }
 
   logOut() {
@@ -32,7 +38,7 @@ class API {
         },
       },
     };
-    socket.send(JSON.stringify(data));
+    this.socket.send(JSON.stringify(data));
   }
 
   getOnlineUsers() {
@@ -45,13 +51,13 @@ class API {
       type: 'USER_ACTIVE',
       payload: null,
     };
-    if (isOpened) socket.send(JSON.stringify(data));
+    if (isOpened) this.socket.send(JSON.stringify(data));
     else {
-      socket.addEventListener(
+      this.socket.addEventListener(
         'open',
         () => {
           this.sendLogin(login, pass);
-          socket.send(JSON.stringify(data));
+          this.socket.send(JSON.stringify(data));
         },
         { once: true }
       );
@@ -66,9 +72,9 @@ class API {
       type: 'USER_INACTIVE',
       payload: null,
     };
-    if (isOpened) socket.send(JSON.stringify(data));
+    if (isOpened) this.socket.send(JSON.stringify(data));
     else {
-      socket.addEventListener('open', () => socket.send(JSON.stringify(data)), { once: true });
+      this.socket.addEventListener('open', () => this.socket.send(JSON.stringify(data)), { once: true });
     }
   }
 
@@ -84,7 +90,7 @@ class API {
         },
       },
     };
-    socket.send(JSON.stringify(data));
+    this.socket.send(JSON.stringify(data));
   }
 
   getMessages(login: string) {
@@ -98,7 +104,7 @@ class API {
         },
       },
     };
-    socket.send(JSON.stringify(data));
+    this.socket.send(JSON.stringify(data));
   }
 
   changeReadStatus(msgId: string) {
@@ -112,7 +118,7 @@ class API {
         },
       },
     };
-    socket.send(JSON.stringify(data));
+    this.socket.send(JSON.stringify(data));
   }
 
   deleteMessage(msgId: string) {
@@ -126,7 +132,7 @@ class API {
         },
       },
     };
-    socket.send(JSON.stringify(data));
+    this.socket.send(JSON.stringify(data));
   }
 
   editMessage(msgId: string, text: string) {
@@ -141,7 +147,7 @@ class API {
         },
       },
     };
-    socket.send(JSON.stringify(data));
+    this.socket.send(JSON.stringify(data));
   }
 }
 
