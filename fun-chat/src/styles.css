@@ -179,6 +179,11 @@ body {
   background-color: grey;
 }
 
+.msg-history__placeholder {
+  vertical-align: middle;
+  line-height: 350px;
+}
+
 .msg-text {
   word-break: break-all;
 }

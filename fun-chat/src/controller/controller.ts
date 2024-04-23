@@ -130,6 +130,9 @@ class Controller {
     const toCurrent = current && current.firstChild?.textContent === data.from;
     const fromCurrent = current && current.firstChild?.textContent === data.to;
     if (msgHistory && (toCurrent || fromCurrent)) {
+      try {
+        getDomElement('.msg-history__placeholder').remove();
+      } catch {}
       msgHistory.appendChild(new MessageItem(data).getNode());
       this.scrollHistory();
     }

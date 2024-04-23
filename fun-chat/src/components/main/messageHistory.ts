@@ -2,6 +2,7 @@ import Component from '../basic-components/component';
 import { MessageType } from '../../types';
 import MessageItem from './MessageItem';
 import API from '../../api/api';
+import { span } from '../basic-components/tags';
 import { getDomElement, getDomElements } from '../../utils/getDomElement';
 
 class MessageHistory extends Component {
@@ -16,6 +17,7 @@ class MessageHistory extends Component {
     });
     this.setListener('click', () => this.changeStatus());
     getDomElement('.send-button').addEventListener('click', () => this.changeStatus());
+    if (data.length === 0) this.appendChildren(span('msg-history__placeholder', 'Write your first message'));
   }
 
   changeStatus() {
