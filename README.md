@@ -4,6 +4,8 @@ A real-time chat application built with WebSockets. It allows users to authentic
 
 ## 🚀 Deployment
 
+A [server-side](https://github.com/rolling-scopes-school/fun-chat-server/tree/main) application must be installed for deployment to work
+
 [Deploy](https://lustrochka-fun-chat.netlify.app)
 
 ## ⚙️ Technology Stack
