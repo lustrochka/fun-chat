@@ -59,13 +59,19 @@ A [server-side](https://github.com/rolling-scopes-school/fun-chat-server/tree/ma
   git clone https://github.com/lustrochka/rss-puzzle.git
 ```
 
-6. Install NPM packages
+6. Go to folder fun-chat
+
+```sh
+  cd fun-chat
+```
+
+7. Install NPM packages
 
 ```sh
   npm install
 ```
 
-7. Start project
+8. Start project
 
 ```sh
   npm run start
